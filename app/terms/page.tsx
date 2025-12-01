@@ -1,9 +1,12 @@
 import Section from "@/components/Section";
 import Link from "next/link";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function TermsPage() {
   return (
     <main className="min-h-screen bg-gray-50 text-gray-800">
+      <Header />
       <Section title="Terms and Conditions">
         <div className="max-w-4xl mx-auto space-y-8 leading-relaxed">
           {/* Intro */}
@@ -112,6 +115,7 @@ export default function TermsPage() {
           </div>
         </div>
       </Section>
+      <Footer />
     </main>
   );
 }

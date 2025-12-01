@@ -1,9 +1,12 @@
-import Section from "@/components/Section";
+import Section from "../components/Section";
 import Link from "next/link";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 export default function PrivacyPolicyPage() {
   return (
     <main className="min-h-screen bg-gray-50 text-gray-800">
+      <Header />
       <Section title="Privacy Policy">
         <div className="max-w-4xl mx-auto space-y-8 leading-relaxed">
           <p className="text-gray-700">
@@ -86,6 +89,7 @@ export default function PrivacyPolicyPage() {
           </div>
         </div>
       </Section>
+      <Footer />
     </main>
   );
 }

@@ -1,4 +1,6 @@
-import Section from "@/components/Section";
+import Section from "../components/Section";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const faqs = [
   {
@@ -36,6 +38,7 @@ const faqs = [
 export default function FAQPage() {
   return (
     <main className="min-h-screen bg-gray-50 text-gray-800">
+      <Header />
       <Section title="Frequently Asked Questions">
         <div className="max-w-4xl mx-auto divide-y divide-gray-200">
           {faqs.map((faq, idx) => (
@@ -56,6 +59,7 @@ export default function FAQPage() {
           </p>
         </div>
       </Section>
+      <Footer />
     </main>
   );
 }
