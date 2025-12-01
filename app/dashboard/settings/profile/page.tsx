@@ -16,7 +16,6 @@ export default function ProfileSettingsPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
-  // Fetch profile from Supabase
   const fetchProfile = async () => {
     setLoading(true);
     try {
@@ -28,10 +27,10 @@ export default function ProfileSettingsPage() {
       }
 
       const { data, error } = await supabase
-        .from<'profiles', Profile>('profiles') // ✅ Fixed: two type arguments
+        .from('profiles')
         .select('full_name, username, email, btc_address')
         .eq('id', userData.user.id)
-        .single();
+        .single<Profile>(); // ✅ Pass the type to single() instead of .from()
 
       if (error) {
         console.error('Error fetching profile:', error);
@@ -65,7 +64,7 @@ export default function ProfileSettingsPage() {
       if (!userData.user) throw new Error('No user session');
 
       const { error } = await supabase
-        .from<'profiles', Profile>('profiles')
+        .from('profiles')
         .update({
           full_name: profile.full_name,
           username: profile.username,
