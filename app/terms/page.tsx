@@ -1,4 +1,4 @@
-import Section from "@/components/Section";
+import Section from "../components/Section";
 import Link from "next/link";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
