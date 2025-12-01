@@ -19,7 +19,6 @@ export default function ProfileSettingsPage() {
   // Fetch profile from Supabase
   const fetchProfile = async () => {
     setLoading(true);
-
     try {
       const { data: userData } = await supabase.auth.getUser();
       if (!userData.user) {
@@ -29,7 +28,7 @@ export default function ProfileSettingsPage() {
       }
 
       const { data, error } = await supabase
-        .from<Profile>('profiles')
+        .from<'profiles', Profile>('profiles') // ✅ Fixed: two type arguments
         .select('full_name, username, email, btc_address')
         .eq('id', userData.user.id)
         .single();
@@ -50,13 +49,11 @@ export default function ProfileSettingsPage() {
     }
   };
 
-  // Handle input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setProfile((prev) => (prev ? { ...prev, [name]: value } : prev));
   };
 
-  // Handle saving profile
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!profile) return;
@@ -68,7 +65,7 @@ export default function ProfileSettingsPage() {
       if (!userData.user) throw new Error('No user session');
 
       const { error } = await supabase
-        .from<Profile>('profiles')
+        .from<'profiles', Profile>('profiles')
         .update({
           full_name: profile.full_name,
           username: profile.username,
