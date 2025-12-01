@@ -17,7 +17,6 @@ export default function NotificationsPage() {
   const { profile, loading } = useUserData();
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
-  // ✅ Only fetch when profile is available
   useEffect(() => {
     if (!profile) return;
     fetchNotifications();
@@ -25,14 +24,15 @@ export default function NotificationsPage() {
 
   const fetchNotifications = async () => {
     if (!profile) return;
+
     const { data, error } = await supabase
-      .from<Notification>('notifications')
+      .from('notifications')  // ✔ FIXED — removed generics
       .select('*')
       .eq('user_id', profile.id)
       .order('created_at', { ascending: false });
 
     if (error) toast.error(error.message);
-    else setNotifications(data || []);
+    else setNotifications((data as Notification[]) || []);
   };
 
   if (loading) return <p>Loading...</p>;
@@ -41,6 +41,7 @@ export default function NotificationsPage() {
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4">Notifications</h1>
+
       {notifications.length === 0 ? (
         <p>No notifications.</p>
       ) : (
@@ -50,7 +51,7 @@ export default function NotificationsPage() {
               <p className="font-semibold">{n.title}</p>
               <p>{n.message}</p>
               <p className="text-sm text-gray-500">
-                {new Date(n.created_at).toLocaleString()} - {n.read ? 'Read' : 'Unread'}
+                {new Date(n.created_at).toLocaleString()} – {n.read ? 'Read' : 'Unread'}
               </p>
             </li>
           ))}
