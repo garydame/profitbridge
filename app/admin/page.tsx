@@ -14,6 +14,8 @@ interface Stats {
 interface ChartData {
   name: string;
   value: number;
+  [key: string]: string | number;
+
 }
 
 export default function AdminOverviewPage() {
